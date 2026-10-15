@@ -1,0 +1,20 @@
+id:"1"
+type:"document"
+titre:"Cours PHP"
+mots-cles:"développement, web, php"
+description:"Cours complet sur PHP avec 
+plusieurs chapitres et exemples pratiques."
+fichier:"document_1.pdf"
+date:"2025-11-14"
+
+id:"2"
+type:"favori"
+titre:"10 règles d’or en matière de sécurité numérique"
+mots-cles:"cybersécurité, numérique, mot de passe, mail, virus, malware"
+description:"La réduction des risques induits par l’usage des technologies 
+numériques :repose d’abord sur le respect de bonnes pratiques à adopter. 
+À elles seules, ces dix règles d’or vous protègeront de la majorité des risques 
+numériques qui pèsent sur vos usages personnels ou professionnels."
+url:"https://cyber.gouv.fr/10-regles-dor-en-matiere-de-securite-numerique"
+date:"2025-08-07"
+
