@@ -13,14 +13,14 @@ include("includes/fonctions.php");
         foreach($ressources as $res){ //foreach qui parcours les données permet leur affichage dans la variable $res
             echo '<article>';
                 $logo = $res['type']=="document" ? "data\img\logo-document.svg" : "data\img\logo-favori.svg"; //condition qui vérifie le type de document et affiche l'image en fonction
-                echo '<h1><img src="'.$logo.'" alt="'.htmlspecialchars($res['type']).'" width="32" height="32"> '.$res['titre'].'</h1>'; //affichage de l'image
+                echo '<h1><img src="'.$logo.'" alt="'.htmlspecialchars($res['type']).'" width="32" height="32"> '.$res['titre'].'</h1>'; //affichage de l'image (merci deepseek)
                 echo '<p>Mots-Clés: '.$res['mots-cles'].'</p>'; //affichage des mots clés
                 $chemin=$res['type']=="document" ? $res['fichier'] : $res['url']; //condition qui vérifie le type de fichier et le défini dans la variable $chemin
                 echo '<p>Chemin du fichier : '.$chemin.'</p>'; //affichage du chemin de fichier depuis $chemin
                 echo '<p>Date : '.$res['date'].'</p>'; //affichage de la date
             echo '</article>';
         }
-
+    //nb ajouter uploads dans la condition l17
         ?>
     </body>
 </html>
