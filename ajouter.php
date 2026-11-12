@@ -64,13 +64,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Pour un document -->
     <div id="champDocument" style="display: none; margin-top: 10px;">
         <label for="fichier">Sélectionnez votre fichier :</label>
-        <input type="file" id="fichier" name="fichier">
+        <input type="file" id="fichier" name="fichier" required>
+        <label for="Titre">Veuillez entrer un titre pour votre document</label>
+        <input type="text" id="docName" name="Titre" required></input>
     </div>
 
     <!-- Pour un URL -->
     <div id="champFavori" style="display: none; margin-top: 10px;">
         <label for="url">Entrez l'URL du favori :</label>
-        <input type="url" id="url" name="url" placeholder="https://exemple.com">
+        <input type="url" id="url" name="url" placeholder="https://exemple.com" required>
     </div>
 
     <br>
