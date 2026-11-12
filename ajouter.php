@@ -54,15 +54,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
-<form METHOD="POST">
+<form METHOD="POST"> <!-- Form de base-->
     <label for="resType">Choissisez un type de ressource</label>
     <select id="resType" name="formType">
-        <option value="choice">VEUILLEZ CHOISIR UN TYPE DE DOCUMENT</option>
+        <option value="choice" disabled selected>VEUILLEZ CHOISIR UN TYPE DE DOCUMENT</option>
         <option value="Document">Document</option>
         <option value="Favori">Favori</option>
     </select>
+    <!-- Pour un document -->
+    <div id="champDocument" style="display: none; margin-top: 10px;">
+        <label for="fichier">Sélectionnez votre fichier :</label>
+        <input type="file" id="fichier" name="fichier">
+    </div>
+
+    <!-- Pour un URL -->
+    <div id="champFavori" style="display: none; margin-top: 10px;">
+        <label for="url">Entrez l'URL du favori :</label>
+        <input type="url" id="url" name="url" placeholder="https://exemple.com">
+    </div>
+
+    <br>
+    <button type="submit">Envoyer</button>
+</form>
 
          <!-- attention à l'attribut enctype pour l'envoi de fichier ?????-->
+
+
+
 
 
     <!-- Script de bascule : afficher le champ fichier ou le champ URL selon le type
@@ -70,11 +88,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <script type="text/javascript">
     console.log("Hello World");
     let docType = document.getElementById('resType');
+    //Récupération des deux blocs HTML
+    let divDocument = document.getElementById('champDocument')
+    let divFavori = document.getElementById('champFavori')
     docType.addEventListener('change', function() {
         let docTypeValue = docType.value;
         console.log(docTypeValue);
-    });
+        if(docTypeValue==="Document"){
+            divDocument.style.display="block";
+            divFavori.style.display="none";
+        }
+        else{
+            divFavori.style.display="block";
+            divDocument.style.display="none";
+        }
+    }); //fonction qui attend le changement de ressrouce
 </script>
+
 
 
 </body>
