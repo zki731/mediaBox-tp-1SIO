@@ -1,11 +1,11 @@
 id:"1"
 type:"document"
-titre:"Cours PHP"
-mots-cles:"développement, web, php"
-description:"Cours complet sur PHP avec 
-plusieurs chapitres et exemples pratiques."
+titre:"Cours RGPD"
+mots-cles:"RGPD, réglementation, sensibilisation"
+description:"Cours de sensibilisation à la protections 
+des données."
 fichier:"document_1.pdf"
-date:"2025-11-14"
+date:"2026-10-15"
 
 id:"2"
 type:"favori"
@@ -25,3 +25,4 @@ mots-cles:"league of legends, moba, build"
 description:"Site officiel de U.GG LoL"
 url:"https://u.gg/"
 date:"2026-11-12"
+

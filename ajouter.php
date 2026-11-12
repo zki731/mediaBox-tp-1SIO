@@ -45,20 +45,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="fr">
 <head>
     <meta charset="utf-8">
-    <title>Titre de la page</title>
+    <title>Ajoutez un document</title>
     <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
     <!-- Afficher les erreurs s'il y en a (une liste, par exemple) -->
 
 
-    <!-- Le formulaire :
-         - un seul formulaire pour les deux types
-         - valeurs saisies réaffichées
-         - attention à l'attribut enctype pour l'envoi de fichier -->
+
+
+<form METHOD="POST">
+    <label for="resType">Choissisez un type de ressource</label>
+    <select id="resType" name="formType">
+        <option value="choice">VEUILLEZ CHOISIR UN TYPE DE DOCUMENT</option>
+        <option value="Document">Document</option>
+        <option value="Favori">Favori</option>
+    </select>
+
+         <!-- attention à l'attribut enctype pour l'envoi de fichier ?????-->
 
 
     <!-- Script de bascule : afficher le champ fichier ou le champ URL selon le type
          (penser à l'état du formulaire au chargement de la page) -->
+<script type="text/javascript">
+    console.log("Hello World");
+    let docType = document.getElementById('resType');
+    docType.addEventListener('change', function() {
+        let docTypeValue = docType.value;
+        console.log(docTypeValue);
+    });
+</script>
+
+
 </body>
 </html>
