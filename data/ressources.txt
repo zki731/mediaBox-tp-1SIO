@@ -2,7 +2,7 @@ id:"1"
 type:"document"
 titre:"Cours RGPD"
 mots-cles:"RGPD, réglementation, sensibilisation"
-description:"Cours de sensibilisation à la protections 
+description:"Cours de sensibilisation à la protections
 des données."
 fichier:"document_1.pdf"
 date:"2026-10-15"
@@ -11,9 +11,9 @@ id:"2"
 type:"favori"
 titre:"10 règles d’or en matière de sécurité numérique"
 mots-cles:"cybersécurité, numérique, mot de passe, mail, virus, malware"
-description:"La réduction des risques induits par l’usage des technologies 
-numériques :repose d’abord sur le respect de bonnes pratiques à adopter. 
-À elles seules, ces dix règles d’or vous protègeront de la majorité des risques 
+description:"La réduction des risques induits par l’usage des technologies
+numériques :repose d’abord sur le respect de bonnes pratiques à adopter.
+À elles seules, ces dix règles d’or vous protègeront de la majorité des risques
 numériques qui pèsent sur vos usages personnels ou professionnels."
 url:"https://cyber.gouv.fr/10-regles-dor-en-matiere-de-securite-numerique"
 date:"2025-08-07"
@@ -25,4 +25,20 @@ mots-cles:"league of legends, moba, build"
 description:"Site officiel de U.GG LoL"
 url:"https://u.gg/"
 date:"2026-11-12"
+
+id:"4"
+type:"favori"
+titre:"OP.GG"
+mots-cles:"league of legends, test"
+description:"test"
+url:"https://op.gg/fr"
+date:"2026-11-16"
+
+id:"5"
+type:"document"
+titre:"Courriel Emmanuel"
+mots-cles:"Test,"
+description:"Courriel réalisé en anglais"
+fichier:"6afac67e2a771_courriel anglais emmanuel poirot renouf.pdf"
+date:"2026-11-16"
 
