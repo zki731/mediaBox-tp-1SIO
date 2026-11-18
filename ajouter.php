@@ -1,48 +1,50 @@
 <?php
 //Initialisation
 //NB CACHER MOTS CLES ET DESCRIPTION EN JS
-//NB RECOMMENTER CODE POUR MORIN
+//NB RECOMMENTER CODE POUR MORIN ET SUPPRIMER 
 //NB AJOUTER AFFICHAGE DES ERREURS
 
 require_once "includes/fonctions.php";
 
 $erreurs = [];          // messages d'erreur à afficher
-$type = "document";     // valeurs par défaut du formulaire
+$type = "document";     // valeur par défaut du formulaire
 $titre = "";
 $motsCles = "";
 $description = "";
 $url = "";
 
-$extensionsAutorisees = ['pdf', 'doc', 'docx', 'txt', 'jpg', 'png'];            // types de fichiers autorisés
+$extensionsAutorisees = ['pdf', 'doc', 'docx', 'txt', 'jpg', 'png'];// types de fichiers autorisés
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // 2. Récupérer les saisies du formulaire
     //    (pour pouvoir les réafficher en cas d'erreur)
-    $type        = $_POST["type"] ?? "";
-    $titre = ($type === "favori") ? trim($_POST["titre_favori"] ?? "") : trim($_POST["titre"] ?? "");
-    $motsCles    = trim($_POST["mots-cles"] ?? "");
-    $description = trim($_POST["description"] ?? "");
-    $url         = trim($_POST["url"] ?? "");
+    $type = $_POST["type"] ?? "";
+    $titre = ($type === "favori") ? trim($_POST["titre_favori"] ?? "") : trim($_POST["titre"] ?? ""); //Renvoie les deux types de titres en enlevant cara/espaces avec .trim
+    $motsCles = trim($_POST["mots-cles"] ?? ""); //Récupère depuis post les données des form html et .trim 
+    $description = trim($_POST["description"] ?? ""); 
+    $url = trim($_POST["url"] ?? ""); 
 
 
     // 3. Vérifier les saisies
     //    - champs obligatoires selon le type de ressource
     //    - extension du fichier (si document)
     //    Chaque problème ajoute un message au tableau des erreurs.
-    if ($type != "document" && $type != "favori") {
+
+    if ($type != "document" && $type != "favori") { //Vérifie le type de document et renvoie une erreur si ce n'est ni un doc ni un fav
         $erreurs[] = "Le type de ressource est invalide.";
     }
     if ($type === "document") { 
         if (empty($titre)) {
-            $erreurs[] = "Le titre du document est obligatoire.";
+            $erreurs[] = "Le titre du document est obligatoire."; //Rend obligatoire la saisie d'un titre, sinon renvoie erreur
         }
     
         if (!isset($_FILES["fichier"]) || $_FILES["fichier"]["error"] !== UPLOAD_ERR_OK) {
-            $erreurs[] = "Veuillez sélectionner un fichier valide.";
+            $erreurs[] = "Veuillez sélectionner un fichier valide."; //Vérifie que la variable files est affectée ou si il y a une erreur et renvoie cette erreur le cas écheant
         } else {
-            // Extraction et vérification de l'extension
-            $nomFichier = $_FILES["fichier"]["name"];
+            //Si il n'y a pas d'erreur/le fichier est valide : 
+
+            $nomFichier = $_FILES["fichier"]["name"]; //Récupére nom du fichier
             $extension = strtolower(pathinfo($nomFichier, PATHINFO_EXTENSION));
 
             if (!in_array($extension, $extensionsAutorisees)) {
@@ -57,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $erreurs[] = "Veuillez entrer une URL valide.";
         }
     }
-    // vérifie présence et l'état du fichier dans $_FILES, vérifie l'extension et l'extrait, vérifie la validité de l'url et l'extrait également
+
 
     //traitement des fichiers 
 
@@ -177,11 +179,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //Récupération des deux blocs HTML
     let divDocument = document.getElementById('champDocument');
     let divFavori = document.getElementById('champFavori');
-    //gestion du required
+    
     let inputFichier = document.getElementById('fichier');
     let inputTitre = document.getElementById('docName');
     let inputUrl = document.getElementById('url');
-    let inputTitreFavori = document.getElementById('favName'); // [AJOUT]
+    let inputTitreFavori = document.getElementById('favName'); 
     
     function gererAffichage(){
         let docTypeValue = docType.value;
@@ -196,7 +198,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             inputFichier.required = true;
             inputTitre.required = true;
             inputUrl.required = false;
-            inputTitreFavori.required = false; // [AJOUT]
+            inputTitreFavori.required = false; 
         }
         else if(docTypeValue == "favori"){
             divFavori.style.display="block";
@@ -207,7 +209,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             inputFichier.required = false;
             inputTitre.required = false;
             inputUrl.required = true;
-            inputTitreFavori.required = true; // [AJOUT]
+            inputTitreFavori.required = true; 
         }
 
     }
