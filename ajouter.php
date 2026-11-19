@@ -1,8 +1,4 @@
 <?php
-//Initialisation
-//NB CACHER MOTS CLES ET DESCRIPTION EN JS
-//NB RECOMMENTER CODE POUR MORIN ET SUPPRIMER 
-//NB AJOUTER AFFICHAGE DES ERREURS
 
 require_once "includes/fonctions.php";
 
@@ -15,21 +11,13 @@ $url = "";
 
 $extensionsAutorisees = ['pdf', 'doc', 'docx', 'txt', 'jpg', 'png'];// types de fichiers autorisés
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") { 
 
-    // 2. Récupérer les saisies du formulaire
-    //    (pour pouvoir les réafficher en cas d'erreur)
-    $type = $_POST["type"] ?? "";
+    $type = $_POST["type"] ?? ""; //Si il existe il vaut lui même sinon il vaut la chaine vide
     $titre = ($type === "favori") ? trim($_POST["titre_favori"] ?? "") : trim($_POST["titre"] ?? ""); //Renvoie les deux types de titres en enlevant cara/espaces avec .trim
     $motsCles = trim($_POST["mots-cles"] ?? ""); //Récupère depuis post les données des form html et .trim 
     $description = trim($_POST["description"] ?? ""); 
     $url = trim($_POST["url"] ?? ""); 
-
-
-    // 3. Vérifier les saisies
-    //    - champs obligatoires selon le type de ressource
-    //    - extension du fichier (si document)
-    //    Chaque problème ajoute un message au tableau des erreurs.
 
     if ($type != "document" && $type != "favori") { //Vérifie le type de document et renvoie une erreur si ce n'est ni un doc ni un fav
         $erreurs[] = "Le type de ressource est invalide.";
@@ -44,52 +32,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             //Si il n'y a pas d'erreur/le fichier est valide : 
 
-            $nomFichier = $_FILES["fichier"]["name"]; //Récupére nom du fichier
-            $extension = strtolower(pathinfo($nomFichier, PATHINFO_EXTENSION));
+            $nomFichier = $_FILES["fichier"]["name"]; //Récupére nom du fichier depuis l'ordinateur de l'utilisateur
+            $extension = strtolower(pathinfo($nomFichier, PATHINFO_EXTENSION)); // Extrait l'extension du fichier et la convertit en minuscules
 
             if (!in_array($extension, $extensionsAutorisees)) {
-                $erreurs[] = "Extension non autorisée. Formats acceptés : " . implode(', ', $extensionsAutorisees);
+                $erreurs[] = "Extension non autorisée. Formats acceptés : " . implode(', ', $extensionsAutorisees); //Affiche les types de fichiers autorisés si un fichier non autorisés est upload
             }
         }
-    } elseif ($type === "favori") {
+    } elseif ($type === "favori") { //Oblige a donner un titre au favori
         if (empty($titre)) {
             $erreurs[] = "Le titre du favori est obligatoire.";
         }
-        if (empty($url) || !filter_var($url, FILTER_VALIDATE_URL)) {
+        if (empty($url) || !filter_var($url, FILTER_VALIDATE_URL)) { //Oblige a donner une url valide
             $erreurs[] = "Veuillez entrer une URL valide.";
         }
     }
 
+//Traitement des fichiers après vérification : 
 
-    //traitement des fichiers 
-
-    // 4. S'il n'y a aucune erreur :
-    //    - téléverser le fichier (si document)
-    //    - enregistrer la ressource
-    //    - rediriger vers la liste
-    //    Sinon : on continue, la page se réaffiche avec les erreurs.
-
-    if (empty($erreurs)) { //verifie la variable erreur et set le dossier source
+    if (empty($erreurs)) { //Verifie la variable erreur et défini le dossier source
         if ($type === "document") {
             $dossierDestination = "uploads/";
             
-            //sert à créer le dossier si il n'existe pas encore
+            //Sert à créer le dossier si il n'existe pas encore
             if (!is_dir($dossierDestination)) {
                 mkdir($dossierDestination, 0755, true);
             }
 
-            //evite l'écrasement de fichiers portant le même nom
-            $nomUnique = uniqid() . "_" . basename($_FILES["fichier"]["name"]);
-            $cheminFinal = $dossierDestination . $nomUnique;
+            $nomFichier = basename($_FILES["fichier"]["name"]); //Extrait le nom et l'extension sans le chemin de fichier.
+            $cheminFinal = $dossierDestination . $nomFichier;
 
-            // Déplace le fichier de la mémoire temporaire vers le dossier final
+            // Déplace le fichier de la mémoire temporaire vers le dossier final (revoir doc fonction move_uploaded)
             if (move_uploaded_file($_FILES["fichier"]["tmp_name"], $cheminFinal)) {
                 ajouter([
                     'type'        => 'document',
                     'titre'       => $titre,
                     'mots-cles'   => $motsCles,
                     'description' => $description,
-                    'fichier'     => $nomUnique,
+                    'fichier'     => $nomFichier,
                     'date'        => date('Y-m-d')
                 ]);
 
@@ -124,13 +104,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
-    <!-- Afficher les erreurs s'il y en a (une liste, par exemple) -->
 
-
+<!-- Affichage simple des erreurs, à styliser avec du CSS -->
+<?php if (!empty($erreurs)): ?> //Verifie la présence d'erreurs dans l'array erreurs
+    <div class="alert-erreurs">
+        <ul>
+            <?php foreach ($erreurs as $erreur): ?> //Parcours l'array entièrement et crée des éléments dans la liste html en fonction
+                <li><?= htmlspecialchars($erreur) ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
 
 
 <form METHOD="POST" enctype="multipart/form-data"> <!-- permet d'avertir le navigateur que le formulaire va envoyer et du texte et des fichiers binaires -->
-  <!-- attention à l'attribut enctype pour l'envoi de fichier ?????-->   
    <label for="resType">Choissisez un type de ressource</label>
     <select id="resType" name="type">
         <option value="choice" disabled selected>VEUILLEZ CHOISIR UN TYPE DE DOCUMENT</option>
@@ -165,35 +152,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <br>
     <button type="submit">Envoyer</button>
 </form>
-
-         <!-- attention à l'attribut enctype pour l'envoi de fichier ?????-->
-
-
-
-
-
+//Script JS :
 
 <script type="text/javascript">
     console.log("Hello World");
+    //Récupération des blocs HTML
     let docType = document.getElementById('resType');
-    //Récupération des deux blocs HTML
     let divDocument = document.getElementById('champDocument');
     let divFavori = document.getElementById('champFavori');
-    
+    //recuperation des saisies pour un document
     let inputFichier = document.getElementById('fichier');
     let inputTitre = document.getElementById('docName');
+    //recuperation des saisies pour un favori
     let inputUrl = document.getElementById('url');
     let inputTitreFavori = document.getElementById('favName'); 
-    
+    //fonction principale pour afficher le bon document
     function gererAffichage(){
         let docTypeValue = docType.value;
         console.log(docTypeValue);
+
         //si document/url alors :
         if(docTypeValue==="document"){
             divDocument.style.display="block";
             divFavori.style.display="none"; //gestion de l'affichage css du formulaire
 
-            //activation de required sur les champs affichés :
+            //activation de required sur les champs affichés 
             
             inputFichier.required = true;
             inputTitre.required = true;
