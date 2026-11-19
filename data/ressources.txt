@@ -26,11 +26,3 @@ description:"Site officiel de U.GG LoL"
 url:"https://u.gg/"
 date:"2026-11-12"
 
-id:"4"
-type:"favori"
-titre:"OP.GG"
-mots-cles:"league of legends, test"
-description:"test"
-url:"https://op.gg/fr"
-date:"2026-11-16"
-

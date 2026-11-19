@@ -18,6 +18,8 @@ include("includes/fonctions.php");
                 $chemin=$res['type']=="document" ? 'uploads/'.$res['fichier'] : $res['url']; //condition qui vérifie le type de fichier et le défini dans la variable $chemin
                 echo '<p>Chemin du fichier : '.$chemin.'</p>'; //affichage du chemin de fichier depuis $chemin
                 echo '<p>Date : '.$res['date'].'</p>'; //affichage de la date
+                echo '<a href="modifier.php" target="_blank" id="modifier">Modifier</a>'; //Modification du document
+                echo '<a href="supprimer.php?id=' . urlencode($res['id']) . '" onclick="return confirm(\'Supprimer cette ressource ?\');">Supprimer</a>';
                 echo '<a href="'.$chemin.'"target="_blank" rel="noopener noreferrer">Voir</a>'; //Permet de voir le document en prenant ce qui est contenu dans $chemin
             echo '</article>';
         }
