@@ -1,6 +1,6 @@
 <?php
 
-require_once "includes/fonctions.php";
+require_once "includes/fonctions.php"; //importation des fonctions
 
 $erreurs = [];          // messages d'erreur à afficher
 $type = "document";     // valeur par défaut du formulaire
@@ -106,10 +106,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 
 <!-- Affichage simple des erreurs, à styliser avec du CSS -->
-<?php if (!empty($erreurs)): ?> //Verifie la présence d'erreurs dans l'array erreurs
+<?php if (!empty($erreurs)): ?>
     <div class="alert-erreurs">
         <ul>
-            <?php foreach ($erreurs as $erreur): ?> //Parcours l'array entièrement et crée des éléments dans la liste html en fonction
+            <?php foreach ($erreurs as $erreur): ?>
                 <li><?= htmlspecialchars($erreur) ?></li>
             <?php endforeach; ?>
         </ul>
@@ -152,7 +152,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <br>
     <button type="submit">Envoyer</button>
 </form>
-//Script JS :
+<!-- //Script JS : -->
 
 <script type="text/javascript">
     console.log("Hello World");

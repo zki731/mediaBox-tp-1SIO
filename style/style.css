@@ -3,9 +3,158 @@ body{
     flex-wrap: wrap;
     justify-content:space-evenly;
     gap:20px;
+    padding: 20px 20px 100px 20px;
 }
 article{
+    background-color: #ffffff;
     width: 300px;
-    border: solid 2px black;
-    padding:20px;
+    border:2px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+article h1{
+    color: #284077;
+    display : flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 12px;
+}
+/* Merci Gemini Pro pour le bouton voir : */
+article a {
+    margin-top: auto;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    background-color: #f1f5f9;
+    color: #0f172a;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 10px 16px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+article a:hover {
+    background-color: #2563eb;
+    color: #ffffff;
+}
+
+#ajouter{
+    color :white;
+    position :fixed;
+    bottom: 28px;
+    right: 28px;
+    background-color: #5a8eff;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 14px 24px;
+    border-radius: 9999px;
+    box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.45);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    z-index: 100;
+}
+#ajouter:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+body:has(form) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f8fafc;
+    padding: 40px 20px;
+}
+
+/* Titre principal de la page (si tu as un h1 hors du form) */
+body:has(form) > h1 {
+    color: #284077;
+    margin-bottom: 20px;
+    font-size: 1.6rem;
+}
+
+/* Le formulaire reprend le look d'une carte <article> */
+form {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 500px;
+    border: 2px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+}
+
+/* Libellés des champs */
+form label {
+    font-weight: 600;
+    color: #284077;
+    font-size: 0.95rem;
+    margin-bottom: -8px; /* Rapproche le label de son champ */
+}
+
+/* Champs texte, URL, sélecteurs et fichier */
+form input[type="text"],
+form input[type="url"],
+form input[type="file"],
+form select,
+form textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: #0f172a;
+    background-color: #f8fafc;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+/* Effet au clic dans un champ */
+form input:focus,
+form select:focus,
+form textarea:focus {
+    outline: none;
+    border-color: #5a8eff;
+    background-color: #ffffff;
+}
+
+/* Bouton de validation (identique au bouton #ajouter) */
+form button[type="submit"],
+form input[type="submit"] {
+    margin-top: 8px;
+    background-color: #5a8eff;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+form button[type="submit"]:hover,
+form input[type="submit"]:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+/* Lien de retour éventuel vers index.php */
+body:has(form) > a {
+    margin-top: 20px;
+    color: #284077;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+body:has(form) > a:hover {
+    text-decoration: underline;
 }
